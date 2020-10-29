@@ -1,0 +1,34 @@
+{
+	'processors': [
+		'stylelint-processor-styled-components'
+	],
+	'extends': [
+		'stylelint-config-standard',
+		'stylelint-config-styled-components'
+	],
+	'rules': {
+		'declaration-bang-space-after': 'never',
+		'declaration-no-important': true,
+		'block-closing-brace-space-before': 'always-single-line',
+		'block-no-empty': true,
+		'color-hex-case': 'lower',
+		'color-hex-length': 'short',
+		'color-named': 'never',
+		'color-no-invalid-hex': true,
+		'comment-no-empty': true,
+		'function-comma-space-after': null,
+		'indentation': null,
+		'max-nesting-depth': 4,
+		'no-duplicate-selectors': true,
+		'no-extra-semicolons': true,
+		'number-leading-zero': 'always',
+		'number-max-precision': 2,
+		'property-case': 'lower',
+		'property-no-vendor-prefix': null,
+		'string-quotes': 'double',
+		'unit-case': 'lower',
+		'unit-no-unknown': true,
+		'value-keyword-case': ["lower", { 'ignoreKeywords': ['dummyValue'] }],
+		'value-no-vendor-prefix': null
+	}
+}

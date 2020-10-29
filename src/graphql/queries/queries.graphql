@@ -1,0 +1,123 @@
+query GetCharacter {
+	character @client
+}
+
+query GetRickAndMortyCharacter($id: ID) {
+	character(id: $id) {
+		id
+		name
+		status
+		species
+		type
+		gender
+		origin {
+			name
+			type
+			dimension
+		}
+		location {
+			name
+			type
+			dimension
+		}
+		image
+		episode {
+			name
+			episode
+		}
+	}
+}
+
+query GetRickAndMortyCharacters($id: ID) {
+	characters(page: 2, filter: { name: "rick" }) {
+		info {
+			count
+		}
+		results {
+			name
+		}
+	}
+	character(id: $id) {
+		id
+	}
+}
+
+query GetRickAndMortyCharacterIdOne {
+	character(id: "1") {
+		id
+		name
+		status
+		species
+		type
+		gender
+		origin {
+			name
+			type
+			dimension
+		}
+		location {
+			name
+			type
+			dimension
+		}
+		image
+		episode {
+			name
+			episode
+		}
+	}
+}
+
+query GetRickAndMortyCharactersPageTwoFilterRick {
+	characters(page: 2, filter: { name: "rick" }) {
+		info {
+			count
+		}
+		results {
+			name
+		}
+	}
+	character(id: 1) {
+		id
+	}
+}
+
+query GetReviews($episode: Episode!) {
+	reviews(episode: $episode) {
+		episode
+		stars
+		commentary
+	}
+}
+
+query GetADroid($droidID: ID!) {
+	droid(id: $droidID) {
+		id
+		name
+		friends {
+			id
+			name
+		}
+		appearsIn
+		primaryFunction
+	}
+}
+
+query GetHero {
+	hero {
+		name
+	}
+}
+
+query GetTheSchema {
+	__schema {
+		types {
+			name
+			kind
+			description
+			fields {
+				name
+			}
+		}
+	}
+}

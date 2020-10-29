@@ -1,0 +1,41 @@
+@font-face {
+	font-family: 'LobsterV20LatinRegular';
+	src: url('../assets/fonts/lobster-v20-latin-regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Norwester';
+	src: url('../assets/fonts/norwester.woff') format('woff');
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'OldEnglish';
+	src: url('../assets/fonts/old-english.woff2') format('woff2');
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'OpenSansBold';
+	src: url('../assets/fonts/OpenSans-Bold-webfont.woff') format('woff');
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'PhilosopherBold';
+	src: url('../assets/fonts/philosopher-bold-webfont.woff') format('woff');
+	font-style: normal;
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: 'RobotoMonoV4LatinRegular';
+	src: url('../assets/fonts/roboto-mono-v4-latin-regular.woff') format('woff');
+	font-style: normal;
+	font-weight: normal;
+}
