@@ -19,10 +19,3 @@ https://github.com/developit/unfetch
 ### TODO:
 
 https://webpack.js.org/api/module-methods/#magic-comments
-
-@typescript-eslint/eslint-plugin
-@typescript-eslint/parser
-
-eslint
-eslint-config-prettier
-eslint-plugin-jsx-a11y
