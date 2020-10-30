@@ -95,15 +95,20 @@ export default (statsFile) => async (req, res) => {
 	});
 
 	// =====================================================
+	const extractor = new ChunkExtractor({statsFile});
+	// =====================================================
 
+	// =====================================================
 	//	function hydrate() {
-	//		res.write('<!doctype html>');
-	//		renderToNodeStream(<Html />).pipe(res);
+	//		res.write('<!DOCTYPE html>');
+	//		const stream = renderToNodeStream(<Html styleElements={extractor.getStyleElements()} scriptElements={extractor.getScriptElements()} store={JSON.stringify(store)} />);
+	//		stream.pipe(res);
 	//	}
 
 	//	if (__DISABLE_SSR__) {
 	//		return hydrate();
 	//	}
+	// =====================================================
 
 	await asyncGetPromises(routes, req.path, store);
 
@@ -156,8 +161,6 @@ export default (statsFile) => async (req, res) => {
 		}
 
 		// =====================================================
-		const extractor = new ChunkExtractor({statsFile});
-
 		const tree = extractor.collectChunks(<App />);
 		// =====================================================
 
@@ -185,16 +188,16 @@ export default (statsFile) => async (req, res) => {
 
 		const html = (
 			<Html
-				content={body}
-				store={storeState}
 				styleElements={styleElements}
 				scriptElements={scriptElements}
+				store={storeState}
+				content={body}
 				styledComponents={styledComponents}
 				graphqlState={graphqlState}
 			/>
 		);
 
-		const ssrHtml = `<!DOCTYPE html><html lang="en">${renderToString(html)}</html>`;
+		const ssrHtml = `<!DOCTYPE html>${renderToString(html)}`;
 		return res.status(200).send(ssrHtml);
 	} catch (error) {
 		console.log('>>>> SERVER > RESPONSE > ERRRRRRROOOOORRRR!!!: ', error);
