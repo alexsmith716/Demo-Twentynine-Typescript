@@ -15,7 +15,7 @@
 		"check-types": "tsc --noEmit true",
 		"lint:styles": "stylelint src/components/**/*.{css,scss,js,tsx}",
 		"lint:js": "eslint src/components/**/*.{js,ts,tsx}",
-		"lint:Loading": "eslint src/components/Loading/Loading.tsx",
+		"lint:html": "eslint src/helpers/Html.tsx",
 		"stylelint:Loading": "stylelint src/components/Loading/Loading.tsx",
 		"format": "prettier --config .prettierrc --write src/"
 	},

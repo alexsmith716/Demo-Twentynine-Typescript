@@ -1,20 +1,31 @@
 import React from 'react';
 
+// array of React `<link>` elements
+// array of React `<script>` elements
+
 type Props = {
-	assets: {
+	assets?: {
 		scripts: string[];
 		stylesheets: string[];
 		publicPath: string;
 	};
 	content: string;
 	store: string;
+	styleElements: any;
+	scriptElements: any;
 	styledComponents: React.ReactElement[];
 	graphqlState: string;
 };
 
-// <link rel="shortcut icon" href="/favicon.ico" />
+const Html: React.FC<Props> = ({
+	content,
+	store,
+	styleElements,
+	scriptElements,
+	styledComponents,
+	graphqlState,
+}) => {
 
-const Html: React.FC<Props> = ({ content, store, styledComponents, graphqlState }) => {
 	return (
 		<html lang="en-US">
 			<head>
@@ -33,7 +44,8 @@ const Html: React.FC<Props> = ({ content, store, styledComponents, graphqlState 
 				{/* (>>>>>>> STYLED-COMPONENTS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<) */}
 				{styledComponents}
 
-				{/* (>>>>>>> STYLES <<<<<<<<<<<<<<<<<<<<<<<<<<<<<) */}
+				{/* (>>>>>>> CSS STYLES <<<<<<<<<<<<<<<<<<<<<<<<<<<<<) */}
+				{styleElements}
 			</head>
 
 			<body>
@@ -61,6 +73,7 @@ const Html: React.FC<Props> = ({ content, store, styledComponents, graphqlState 
 				)}
 
 				{/* (>>>>>>> SCRIPTS  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<) */}
+				{scriptElements}
 			</body>
 		</html>
 	);

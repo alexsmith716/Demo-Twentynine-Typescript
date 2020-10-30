@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom/server';
+import { renderToNodeStream, renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { Router, StaticRouter } from 'react-router';
 import { createMemoryHistory } from 'history';
@@ -28,7 +28,7 @@ import defineHeaders from './utils/defineHeaders';
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache, ApolloLink, gql } from '@apollo/client';
 
 import { onError } from '@apollo/client/link/error';
-import { getDataFromTree } from '@apollo/client/react/ssr';
+import { getDataFromTree, getMarkupFromTree } from '@apollo/client/react/ssr';
 
 // -------------------------------------------------------------------
 
@@ -96,10 +96,14 @@ export default (statsFile) => async (req, res) => {
 
 	// =====================================================
 
-	function hydrate(a) {
-		res.write('<!doctype html>');
-		ReactDOM.renderToNodeStream(<Html assets={a} store={store} />).pipe(res);
-	}
+	//	function hydrate() {
+	//		res.write('<!doctype html>');
+	//		renderToNodeStream(<Html />).pipe(res);
+	//	}
+
+	//	if (__DISABLE_SSR__) {
+	//		return hydrate();
+	//	}
 
 	await asyncGetPromises(routes, req.path, store);
 
@@ -124,7 +128,7 @@ export default (statsFile) => async (req, res) => {
 		const helmetContext = {};
 		const context = {};
 
-		const component = (
+		const App = () => (
 			<HelmetProvider context={helmetContext}>
 				<ApolloProvider client={clientApollo}>
 					<Provider store={store}>
@@ -140,20 +144,6 @@ export default (statsFile) => async (req, res) => {
 
 		// -------------------------------------------------------------------
 
-		await getDataFromTree(component);
-
-		const content = ReactDOM.renderToString(sheet.collectStyles(component));
-
-		console.log('>>>> SERVER > RESPONSE > 11111===================== !!!! ============== statsFile: ', statsFile);
-		const extractor = new ChunkExtractor({statsFile});
-		console.log('>>>> SERVER > RESPONSE > 22222===================== !!!! =====================');
-		const assets = extractor.collectChunks(<component />);
-		console.log('>>>> SERVER > RESPONSE > 33333===================== !!!! ============== assets: ', assets);
-
-		if (__DISABLE_SSR__) {
-			return hydrate(assets);
-		}
-
 		if (context.url) {
 			return res.redirect(301, context.url);
 		}
@@ -165,45 +155,50 @@ export default (statsFile) => async (req, res) => {
 			return res.redirect(301, location.pathname);
 		}
 
+		// =====================================================
+		const extractor = new ChunkExtractor({statsFile});
+
+		const tree = extractor.collectChunks(<App />);
+		// =====================================================
+
+		// =====================================================
+		await getDataFromTree(App);
+		//  await Promise.all([getDataFromTree(App)]);
+		//  await Promise.all([getMarkupFromTree({tree, renderFunction: renderToStaticMarkup})]);
+		// =====================================================
+
+		//  const content = renderToString(sheet.collectStyles(component));
+		const body = renderToString(tree);
+
 		const storeState = JSON.stringify(store.getState());
 		const graphqlState = JSON.stringify(clientApollo.extract());
+
 		const styledComponents = sheet.getStyleElement();
 
-		const a1 = extractor.getStyleTags();
-		const a2 = extractor.getLinkTags();
-		const a3 = extractor.getScriptTags();
+		const styleElements = extractor.getStyleElements();
+		//	const linkElements = extractor.getLinkElements();
+		const scriptElements = extractor.getScriptElements();
 
-		console.log('>>>> SERVER > getStyleTags: ', a1);
-		console.log('>>>> SERVER > getLinkTags: ', a2);
-		console.log('>>>> SERVER > getScriptTags: ', a3);
-
-		//  >>>> SERVER > getStyleTags:
-		//      <link data-chunk="main" rel="stylesheet" href="/main.0376eef96420b7bb4890.css">
-		//  
-		//  >>>> SERVER > getLinkTags:
-		//      <link data-chunk="main" rel="preload" as="style" href="/main.0376eef96420b7bb4890.css">
-		//      <link data-chunk="main" rel="preload" as="script" href="/vendors.8d30e69a06fdabe79eb0.js">
-		//      <link data-chunk="main" rel="preload" as="script" href="/main.53ae926a52db297c9e19.js">
-		//      
-		//  >>>> SERVER > getScriptTags:
-		//      <script id="__LOADABLE_REQUIRED_CHUNKS__" type="application/json">[]</script><script id="__LOADABLE_REQUIRED_CHUNKS___ext" type="application/json">{"namedChunks":[]}</script>
+		//	console.log('>>>> SERVER > getStyleElements: ', styleElements);
+		//	console.log('>>>> SERVER > getLinkElements: ', linkElements);
+		//	console.log('>>>> SERVER > getScriptElements: ', scriptElements);
 
 		const html = (
 			<Html
-				content={content}
+				content={body}
 				store={storeState}
+				styleElements={styleElements}
+				scriptElements={scriptElements}
 				styledComponents={styledComponents}
 				graphqlState={graphqlState}
 			/>
 		);
 
-		//const ssrHtml = `<!DOCTYPE html><html lang="en"><div>Fooooooooooo!!!!!</div></html>`;
-		//res.status(200).send(ssrHtml);
-		const ssrHtml = `<!DOCTYPE html><html lang="en">${ReactDOM.renderToString(html)}</html>`;
-		res.status(200).send(ssrHtml);
+		const ssrHtml = `<!DOCTYPE html><html lang="en">${renderToString(html)}</html>`;
+		return res.status(200).send(ssrHtml);
 	} catch (error) {
 		console.log('>>>> SERVER > RESPONSE > ERRRRRRROOOOORRRR!!!: ', error);
-		const errorHtml = `<!DOCTYPE html><html lang="en"><div>Error Loading. Response Status 500.</div></html>`;
-		res.status(500).send(errorHtml);
+		// const errorHtml = `<!DOCTYPE html><html lang="en"><div>Error Loading. Response Status 500.</div></html>`;
+		return res.status(500).send(error);
 	}
 };
