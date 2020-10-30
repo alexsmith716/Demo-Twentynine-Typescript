@@ -4,24 +4,19 @@ import React from 'react';
 // array of React `<script>` elements
 
 type Props = {
-	assets?: {
-		scripts: string[];
-		stylesheets: string[];
-		publicPath: string;
-	};
-	content: string;
+	styleElements: React.ReactElement[];
+	scriptElements: React.ReactElement[];
 	store: string;
-	styleElements: any;
-	scriptElements: any;
+	content: string;
 	styledComponents: React.ReactElement[];
 	graphqlState: string;
 };
 
 const Html: React.FC<Props> = ({
-	content,
-	store,
 	styleElements,
 	scriptElements,
+	store,
+	content,
 	styledComponents,
 	graphqlState,
 }) => {

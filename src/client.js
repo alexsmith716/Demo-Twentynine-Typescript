@@ -111,5 +111,5 @@ const render = async () => {
 };
 
 loadableReady(() => {
-  render();
+	render();
 });
