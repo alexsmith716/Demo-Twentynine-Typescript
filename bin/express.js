@@ -13,13 +13,6 @@ const logger = require('../src/utils/logger');
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT || 8080;
 
-logger.log(`>>>>>>>>>>>>>>>>> START > __CLIENT__ ?: ${__CLIENT__}`);
-logger.log(`>>>>>>>>>>>>>>>>> START > __SERVER__ ?: ${__SERVER__}`);
-logger.log(`>>>>>>>>>>>>>>>>> START > __DEVELOPMENT__ ?: ${__DEVELOPMENT__}`);
-logger.log(`>>>>>>>>>>>>>>>>> START > __DISABLE_SSR__ ?: ${__DISABLE_SSR__}`);
-logger.log(`>>>>>>>>>>>>>>>>> START > HOST ?: ${host}`);
-logger.log(`>>>>>>>>>>>>>>>>> START > PORT ?: ${port}`);
-
 const unhandledRejections = new Map();
 
 process.on('unhandledRejection', (reason, promise) => {
