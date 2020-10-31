@@ -99,15 +99,15 @@ export default (statsFile) => async (req, res) => {
 	// =====================================================
 
 	// =====================================================
-	//	function hydrate() {
-	//		res.write('<!DOCTYPE html>');
-	//		const stream = renderToNodeStream(<Html styleElements={extractor.getStyleElements()} scriptElements={extractor.getScriptElements()} store={JSON.stringify(store)} />);
-	//		stream.pipe(res);
-	//	}
+	function hydrate() {
+		res.write('<!DOCTYPE html>');
+		const stream = renderToNodeStream(<Html linkElements={extractor.getLinkElements()} styleElements={extractor.getStyleElements()} scriptElements={extractor.getScriptElements()} store={JSON.stringify(store)} />);
+		stream.pipe(res);
+	}
 
-	//	if (__DISABLE_SSR__) {
-	//		return hydrate();
-	//	}
+	if (__DISABLE_SSR__) {
+		return hydrate();
+	}
 	// =====================================================
 
 	await asyncGetPromises(routes, req.path, store);
@@ -178,16 +178,17 @@ export default (statsFile) => async (req, res) => {
 
 		const styledComponents = sheet.getStyleElement();
 
+		const linkElements = extractor.getLinkElements();
 		const styleElements = extractor.getStyleElements();
-		//	const linkElements = extractor.getLinkElements();
 		const scriptElements = extractor.getScriptElements();
 
-		//	console.log('>>>> SERVER > getStyleElements: ', styleElements);
-		//	console.log('>>>> SERVER > getLinkElements: ', linkElements);
-		//	console.log('>>>> SERVER > getScriptElements: ', scriptElements);
+		console.log('>>>> SERVER > getLinkElements: ', linkElements);
+		console.log('>>>> SERVER > getStyleElements: ', styleElements);
+		console.log('>>>> SERVER > getScriptElements: ', scriptElements);
 
 		const html = (
 			<Html
+				linkElements={linkElements}
 				styleElements={styleElements}
 				scriptElements={scriptElements}
 				store={storeState}

@@ -4,6 +4,7 @@ import React from 'react';
 // array of React `<script>` elements
 
 type Props = {
+	linkElements: React.ReactElement[];
 	styleElements: React.ReactElement[];
 	scriptElements: React.ReactElement[];
 	store: string;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 const Html: React.FC<Props> = ({
+	linkElements,
 	styleElements,
 	scriptElements,
 	store,
@@ -36,10 +38,13 @@ const Html: React.FC<Props> = ({
 				<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 				<meta name="apple-mobile-web-app-title" content="Election App 2020!" />
 
+				{/* (>>>>>>> LinkElements <<<<<<<<<<<<<<<<<<<<<<<<<<<<<) */}
+				{linkElements}
+
 				{/* (>>>>>>> STYLED-COMPONENTS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<) */}
 				{styledComponents}
 
-				{/* (>>>>>>> CSS STYLES <<<<<<<<<<<<<<<<<<<<<<<<<<<<<) */}
+				{/* (>>>>>>> StyleElements <<<<<<<<<<<<<<<<<<<<<<<<<<<<<) */}
 				{styleElements}
 			</head>
 
