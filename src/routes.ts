@@ -3,8 +3,8 @@ import { App } from './containers/App';
 import Home from './containers/Home';
 import NotFound from './containers/NotFound';
 
-//	import About from './containers/About/Loadable';
-//	import GraphqlPage from './containers/GraphqlPage/Loadable';
+import About from './containers/About/Loadable';
+import GraphqlPage from './containers/GraphqlPage/Loadable';
 
 import { preloadData as preloadDataApp } from './containers/App/preloadData';
 import { preloadData as preloadDataAboutThree } from './containers/About/preloadData';
@@ -26,17 +26,17 @@ const routes = [
 						exact: true,
 						component: Home,
 					},
-					//	{
-					//		path: '/about',
-					//		exact: true,
-					//		component: About,
-					//		loadData: preloadDataAboutThree,
-					//	},
-					//	{
-					//		path: '/graphqlpage',
-					//		exact: true,
-					//		component: GraphqlPage,
-					//	},
+					{
+						path: '/about',
+						exact: true,
+						component: About,
+						loadData: preloadDataAboutThree,
+					},
+					{
+						path: '/graphqlpage',
+						exact: true,
+						component: GraphqlPage,
+					},
 					{
 						path: '*',
 						component: NotFound,

@@ -98,16 +98,26 @@ export default (statsFile) => async (req, res) => {
 	const extractor = new ChunkExtractor({statsFile});
 	// =====================================================
 
+	const linkElements = extractor.getLinkElements();
+	const styleElements = extractor.getStyleElements();
+	const scriptElements = extractor.getScriptElements();
+
+	console.log('>>>> SERVER > getLinkElements: ', linkElements);
+	console.log('>>>> SERVER > getStyleElements: ', styleElements);
+	console.log('>>>> SERVER > getScriptElements: ', scriptElements);
+
 	// =====================================================
 	function hydrate() {
 		res.write('<!DOCTYPE html>');
-		const stream = renderToNodeStream(<Html linkElements={extractor.getLinkElements()} styleElements={extractor.getStyleElements()} scriptElements={extractor.getScriptElements()} store={JSON.stringify(store)} />);
+		const stream = renderToNodeStream(<Html linkElements={linkElements} styleElements={styleElements} scriptElements={scriptElements} store={JSON.stringify(store)} />);
 		stream.pipe(res);
 	}
 
 	if (__DISABLE_SSR__) {
+		console.log('=========================================1111111111')
 		return hydrate();
 	}
+	console.log('=========================================2222222222')
 	// =====================================================
 
 	await asyncGetPromises(routes, req.path, store);
@@ -178,13 +188,7 @@ export default (statsFile) => async (req, res) => {
 
 		const styledComponents = sheet.getStyleElement();
 
-		const linkElements = extractor.getLinkElements();
-		const styleElements = extractor.getStyleElements();
-		const scriptElements = extractor.getScriptElements();
-
-		console.log('>>>> SERVER > getLinkElements: ', linkElements);
-		console.log('>>>> SERVER > getStyleElements: ', styleElements);
-		console.log('>>>> SERVER > getScriptElements: ', scriptElements);
+		console.log('>>>> SERVER > styledComponents: ', styledComponents);
 
 		const html = (
 			<Html

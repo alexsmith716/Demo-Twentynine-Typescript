@@ -21,7 +21,7 @@ import { Provider } from 'react-redux';
 import asyncGetPromises from './utils/asyncGetPromises';
 
 import { RouterTrigger } from './components/RouterTrigger/RouterTrigger';
-//	import ScrollToTop from './components/ScrollToTop';
+//  import ScrollToTop from './components/ScrollToTop';
 
 import routes from './routes';
 import { apiClient } from './helpers/apiClient';
