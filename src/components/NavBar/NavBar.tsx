@@ -38,7 +38,6 @@ export const NavBar: React.FC = () => {
 				<Styles.Expand>
 					<Styles.NavBarBrandLink
 						to="/"
-						className="js-scroll-trigger"
 						onClick={() => setClicked(false)}
 					>
 						Election App
@@ -46,7 +45,7 @@ export const NavBar: React.FC = () => {
 
 					<Styles.NavBarNav clicked={clicked} className={clicked ? 'clicked' : ''}>
 						<li>
-							<Styles.NavBarNavA className="js-scroll-trigger" onClick={doThemeToggle}>
+							<Styles.NavBarNavA onClick={doThemeToggle}>
 								use {themeMode.mode === 'dark' ? `default` : `dark`} theme
 							</Styles.NavBarNavA>
 						</li>
@@ -57,7 +56,6 @@ export const NavBar: React.FC = () => {
 									<Styles.NavBarNavLink
 										isActive={activeRoute === item.url}
 										to={item.url}
-										className="js-scroll-trigger"
 										onClick={() => setClicked(false)}
 									>
 										{item.title}
