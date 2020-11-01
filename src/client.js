@@ -27,7 +27,6 @@ import routes from './routes';
 import { apiClient } from './helpers/apiClient';
 import configureStore from './redux/configureStore';
 import isOnline from './utils/isOnline';
-import './utils/navbarDOMCollapse';
 
 import { ThemeContext } from './styled/ThemeContext';
 
