@@ -1,7 +1,9 @@
 import React from 'react';
+import loadable from '@loadable/component';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.css';
 import * as Styles from './styles';
+
 //  import { gql, useQuery, useMutation, useApolloClient } from '@apollo/client';
 
 //  import { fragmentTypeDroid } from '../../graphql/fragments/fragments';

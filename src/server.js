@@ -114,10 +114,8 @@ export default (statsFile) => async (req, res) => {
 	}
 
 	if (__DISABLE_SSR__) {
-		console.log('=========================================1111111111')
 		return hydrate();
 	}
-	console.log('=========================================2222222222')
 	// =====================================================
 
 	await asyncGetPromises(routes, req.path, store);

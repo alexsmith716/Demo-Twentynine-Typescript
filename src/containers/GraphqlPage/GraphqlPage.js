@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-//  import { GraphiQLExample } from '../../components/GraphiQLExample';
+import { GraphiQLExample } from '../../components/GraphiQLExample';
 import { LinkTest } from '../../components/jestTest/LinkTest';
 
 const GraphqlPage = () => {
@@ -16,9 +16,9 @@ const GraphqlPage = () => {
 					<LinkTest page="https:\/\/github.com">Github</LinkTest>
 				</div>
 
-				{/* <div className="mb-5">
+				<div className="mb-5">
 					<GraphiQLExample />
-				</div> */}
+				</div>
 			</div>
 		</>
 	);
